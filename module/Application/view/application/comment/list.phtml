@@ -1,0 +1,22 @@
+<h2 class="text-center"><span class="glyphicon glyphicon-list"></span> Comments</h2>
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Email</th>
+    <th>Webpage</th>
+    <th>Date</th>
+  </thead>
+  <tbody>
+    <?php foreach($comments as $c){
+      echo "<tr>".
+        "<td>" . $c->name . "</td>" .
+        "<td>" . $c->description . "</td>" .
+        "<td>" . $c->email . "</td>" . 
+        "<td>" . $c->webpage . "</td>" . 
+        "<td>" . $c->comment_date . "</td>" .
+      "</tr>";
+    }?>
+  </tbody>
+</table>
+

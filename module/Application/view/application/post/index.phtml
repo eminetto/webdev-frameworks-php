@@ -1,0 +1,21 @@
+<h2 class="text-center"><span class="glyphicon glyphicon-list"></span> Comments</h2>
+<table class="table table-striped">
+  <thead>
+    <th class="col-md-2">Title</th>
+    <th class="col-md-6">Description</th>
+    <th class="col-md-2">Date</th>
+    <th class="col-md-2">Ações</th>
+  </thead>
+  <tbody>
+    <?php foreach($posts as $p){
+      echo "<tr>".
+        "<td>" . $p->title . "</td>" .
+        "<td>" . $p->description . "</td>" .
+        "<td>" . $p->post_date . "</td>" .
+        "<td><button class='btn btn-warning'><span class='glyphicon glyphicon-edit'></span></button>".
+        "<button class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></button>" ."</td>".
+      "</tr>";
+    }?>
+  </tbody>
+</table>
+
