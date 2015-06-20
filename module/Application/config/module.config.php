@@ -48,6 +48,20 @@ return array(
           ),
         ),
       ),
+      'user' => array(
+        'type'    => 'segment',
+        'options' => array(
+          'route'    => '/user[/][:action][/page/:page][/:id]',
+          'constraints' => array(
+            'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+            'id'     => '[0-9]+',
+          ),
+          'defaults' => array(
+            'controller' => 'Application\Controller\User',
+            'action' => 'index',
+          ),
+        ),
+      ),
       // The following is a route to simplify getting started creating
       // new controllers and actions without needing to create a new
       // module. Simply drop new controllers in, and you can access them
@@ -105,23 +119,32 @@ return array(
         $commentTableGateway = new Application\Model\CommentTableGateway($tableGateway);
         return $commentTableGateway;
       },
+      'Application\Model\UserTableGateway' =>  function($sm) {
+        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+        $resultSetPrototype = new Zend\Db\ResultSet\ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Application\Model\User());
+        $tableGateway = new Zend\Db\TableGateway\TableGateway('users', $dbAdapter, null, $resultSetPrototype);
+        $userTableGateway = new Application\Model\UserTableGateway($tableGateway);
+        return $userTableGateway;
+      },
     ),
-  ),
-  'translator' => array(
-      'locale' => 'en_US',
+    'translator' => array(
+      'locale' => 'pt_BR',
       'translation_file_patterns' => array(
-          array(
-              'type'     => 'gettext',
-              'base_dir' => __DIR__ . '/../language',
-              'pattern'  => '%s.mo',
-          ),
+        array(
+          'type'     => 'phparray',
+          'base_dir' => __DIR__ . '/../language',
+          'pattern'  => '%s.php',
+         ),
       ),
+    ),
   ),
   'controllers' => array(
       'invokables' => array(
           'Application\Controller\Index' => 'Application\Controller\IndexController',
           'Application\Controller\Post' => 'Application\Controller\PostController',
-          'Application\Controller\Comment' => 'Application\Controller\CommentController'
+          'Application\Controller\Comment' => 'Application\Controller\CommentController',
+          'Application\Controller\User' => 'Application\Controller\UserController',
       ),
   ),
   'view_manager' => array(
