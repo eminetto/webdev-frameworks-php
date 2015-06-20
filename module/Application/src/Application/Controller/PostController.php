@@ -35,6 +35,7 @@ class PostController extends AbstractActionController
     {
         $tableGateway = $this->getTableGateway();
         $posts = $tableGateway->fetchAll();
+
         return new ViewModel(array(
             'posts' => $posts
         ));
@@ -49,38 +50,22 @@ class PostController extends AbstractActionController
         $form = new PostForm();
         $tableGateway = $this->getTableGateway();
         $request = $this->getRequest();
-        /* se a requisiÃ§Ã£o Ã© post os dados foram enviados via formulÃ¡rio*/
         if ($request->isPost()) {
             $post = new PostModel;
-            /* configura a validaÃ§Ã£o do formulÃ¡rio com os filtros
-             e validators da entidade*/
             $form->setInputFilter($post->getInputFilter());
-            /* preenche o formulÃ¡rio com os dados que o usuÃ¡rio digitou na tela*/
             $form->setData($request->getPost());
-            /* faz a validaÃ§Ã£o do formulÃ¡rio*/
             if ($form->isValid()) {
-                /* pega os dados validados e filtrados */
                 $data = $form->getData();
-                /* armazena a data de inclusÃ£o do post*/
                 $data['post_date'] = date('Y-m-d H:i:s');
-                /* preenche os dados do objeto Post com os dados do formulÃ¡rio*/
                 $post->exchangeArray($data);
-                /* salva o novo post*/
                 $tableGateway->save($post);
-                /* redireciona para a pÃ¡gina inicial que mostra todos os posts*/
                 return $this->redirect()->toUrl('/post');
             }
         }
-        /* essa Ã© a forma de recuperar um parÃ¢metro vindo da url como:
-            http://iniciando-zf2.dev/post/save/1
-        */
         $id = (int) $this->params()->fromRoute('id', 0);
-        if ($id > 0) { //Ã© uma atualizaÃ§Ã£o   
-            /* busca a entidade no banco de dados*/
+        if ($id > 0) {
             $post = $tableGateway->get($id);
-            /* preenche o formulÃ¡rio com os  dados do banco de dados*/
             $form->bind($post);
-            /* muda o texto do botÃ£o submit*/
             $form->get('submit')->setAttribute('value', 'Edit');
         }
         return new ViewModel(
@@ -96,12 +81,10 @@ class PostController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if ($id == 0) {
-            throw new \Exception("CÃ³digo obrigatÃ³rio");
+            throw new \Exception("Código obrigatório.");
         }
-        /* remove o registro e redireciona para a pÃ¡gina inicial*/
         $tableGateway = $this->getTableGateway()->delete($id);
         
         return $this->redirect()->toUrl('/post');
     }
-
 }

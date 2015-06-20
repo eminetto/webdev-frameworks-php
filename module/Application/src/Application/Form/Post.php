@@ -22,18 +22,22 @@ class Post extends Form
             'name' => 'title',
             'attributes' => array(
                 'type'  => 'text',
+                'class' => 'form-control',
             ),
             'options' => array(
                 'label' => 'Título',
+                'class' => 'control-label',
             ),
         ));
         $this->add(array(
             'name' => 'description',
             'attributes' => array(
                 'type'  => 'textarea',
+                'class' => 'form-control'
             ),
             'options' => array(
                 'label' => 'Texto do post',
+                'class' => 'control-label'
             ),
         ));
         $this->add(array(
@@ -42,6 +46,7 @@ class Post extends Form
                 'type'  => 'submit',
                 'value' => 'Enviar',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-success'
             ),
         ));
     }
