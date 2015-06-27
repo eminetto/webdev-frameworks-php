@@ -128,7 +128,8 @@ return array(
         return $userTableGateway;
       },
     ),
-    'translator' => array(
+  ),
+  'translator' => array(
       'locale' => 'pt_BR',
       'translation_file_patterns' => array(
         array(
@@ -138,7 +139,6 @@ return array(
          ),
       ),
     ),
-  ),
   'controllers' => array(
       'invokables' => array(
           'Application\Controller\Index' => 'Application\Controller\IndexController',
